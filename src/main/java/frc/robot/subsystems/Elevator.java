@@ -24,13 +24,13 @@ public final class Elevator extends SubsystemBase {
         public static final TalonSRXConfiguration kMotorConfig = new TalonSRXConfiguration();
         static {
             kMotorConfig.peakCurrentDuration = 1000; // milliseconds
-            kMotorConfig.peakCurrentLimit = 35;
+            kMotorConfig.peakCurrentLimit = 25;
             kMotorConfig.continuousCurrentLimit = 10; // amps
 
-            kMotorConfig.forwardSoftLimitEnable = true;
+            kMotorConfig.forwardSoftLimitEnable = false;
             kMotorConfig.forwardSoftLimitThreshold = kForwardLimit;
 
-            kMotorConfig.reverseSoftLimitEnable = true;
+            kMotorConfig.reverseSoftLimitEnable = false;
             kMotorConfig.reverseSoftLimitThreshold = kReverseLimit;
 
             kMotorConfig.slot0.kP = kP;
@@ -50,11 +50,19 @@ public final class Elevator extends SubsystemBase {
     public Elevator() {
         motor_.configFactoryDefault();
         motor_.configAllSettings(Const.kMotorConfig);
+        motor_.setInverted(true);
         motor_.setNeutralMode(NeutralMode.Brake);
     }
 
     private double positionClamp(double requested) {
         return MathUtil.clamp(requested, Const.kReverseLimit, Const.kForwardLimit);
+    }
+
+    public Command runDutyCycle(double dutycycle) {
+        return runEnd(
+            () -> { motor_.set(TalonSRXControlMode.PercentOutput, dutycycle); },
+            () -> { motor_.set(TalonSRXControlMode.PercentOutput, 0.0); }
+        );
     }
 
     public Command goToPosition(double position) {
