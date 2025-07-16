@@ -28,7 +28,8 @@ public class Robot extends TimedRobot {
   public Robot() {
     // command bindings
     drivetrain_.setDefaultCommand(
-      drivetrain_.driveCartesian(xbox_::getLeftY, xbox_::getLeftX, xbox_::getRightY));
+      drivetrain_.driveCartesian(
+        () -> -xbox_.getLeftY(), xbox_::getLeftX, xbox_::getRightX));
 
     // TODO: figure out desired elevator controls
     elevator_.setDefaultCommand(
