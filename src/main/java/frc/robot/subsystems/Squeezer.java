@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public final class Squeezer extends SubsystemBase {
     private static final class Const {
-        public static final int kMotorCANID = 1;
+        public static final int kMotorCANID = 2;
 
-        public static final double kCloseDuty = 0.75;
-        public static final double kOpenDuty = -0.25;
+        public static final double kCloseDuty = -0.75;
+        public static final double kOpenDuty = 0.75;
 
         public static final TalonSRXConfiguration kMotorConfig = new TalonSRXConfiguration();
         static {
