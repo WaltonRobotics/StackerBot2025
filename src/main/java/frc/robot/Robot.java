@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
     xbox_.b().whileTrue(squeezer_.open());
 
     // xbox_.leftBumper().whileTrue(elevator_.goToPosition(0.1));
-    xbox_.povUp().whileTrue(elevator_.runDutyCycle(0.25));
+    xbox_.povUp().whileTrue(elevator_.runDutyCycle(0.5));
     xbox_.povDown().whileTrue(elevator_.runDutyCycle(-0.25));
 
   }
